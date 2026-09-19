@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:mysql}:${DB_PORT:3306}/${DB_NAME:salondebellezafamiliar}?useSSL=false&serverTimezone=America/Guatemala&allowPublicKeyRetrieval=true
+
+logging:
+  level:
+    root: INFO
