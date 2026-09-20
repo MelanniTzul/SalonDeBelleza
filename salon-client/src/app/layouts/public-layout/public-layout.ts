@@ -24,5 +24,5 @@ import { RouterLink, RouterOutlet } from "@angular/router";
 })
 export class PublicLayout {
   // Nombre del salón: se cambia aquí y se actualiza en todo el sitio
-  readonly nombre = "Atelier Luma";
+  readonly nombre = "Salón de Belleza Familiar";
 }
