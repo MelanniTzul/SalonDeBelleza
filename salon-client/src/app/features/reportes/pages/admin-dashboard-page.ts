@@ -14,10 +14,8 @@ interface FilaServicio {
   readonly tendencia: string;
 }
 
-/**
- * Pantalla de inicio del administrador (mockup 06).
- * Los números son datos de muestra: se reemplazarán por el endpoint de reportes.
- */
+// Inicio del admin (mockup 06). Los numeros son de muestra hasta que exista
+// el endpoint de reportes.
 @Component({
   selector: "app-admin-dashboard-page",
   changeDetection: ChangeDetectionStrategy.OnPush,

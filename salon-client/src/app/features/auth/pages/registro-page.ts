@@ -5,7 +5,7 @@ import { Router, RouterLink } from "@angular/router";
 import { ApiError, RUTA_INICIO_POR_ROL } from "../../../core/models/auth.models";
 import { AuthService } from "../../../core/services/auth.service";
 
-/** Comprueba que la confirmación coincida con la contraseña escrita arriba. */
+// Revisa que la confirmacion coincida con la contrasena de arriba.
 const passwordsCoinciden = (grupo: AbstractControl): ValidationErrors | null => {
   const password = grupo.get("password")?.value;
   const confirmacion = grupo.get("confirmacion")?.value;

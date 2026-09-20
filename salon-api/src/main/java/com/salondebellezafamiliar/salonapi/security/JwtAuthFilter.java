@@ -20,12 +20,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Lee el token "Authorization: Bearer ..." de cada petición y, si es válido,
- * deja al usuario autenticado en el contexto de Spring Security con su rol.
- * Si no hay token o es inválido simplemente no autentica: la cadena de
- * seguridad decidirá después si la ruta necesitaba autenticación.
- */
+// Lee el token de cada peticion y deja al usuario autenticado con su rol.
+// Si el token no sirve no autentica y ya; la cadena de seguridad decide despues.
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -52,14 +48,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String rol = claims.get("rol", String.class);
 
             if (email != null && rol != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                // Spring Security espera el prefijo ROLE_ para usar hasRole(...)
+                // Spring Security necesita el prefijo ROLE_ para hasRole(...)
                 var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + rol));
                 var auth = new UsernamePasswordAuthenticationToken(email, null, authorities);
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (JwtException | IllegalArgumentException e) {
-            // Token expirado, alterado o mal formado: se sigue sin autenticar.
+            // Token vencido o manipulado: se sigue sin autenticar.
             log.debug("Token JWT rechazado: {}", e.getMessage());
             SecurityContextHolder.clearContext();
         }

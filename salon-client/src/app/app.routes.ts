@@ -6,7 +6,7 @@ import { rolGuard } from "./core/guards/rol.guard";
 import { PublicLayout } from "./layouts/public-layout/public-layout";
 
 export const routes: Routes = [
-  // Sitio público
+  // Sitio publico
   {
     path: "",
     component: PublicLayout,
@@ -19,7 +19,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Autenticación (sin layout: ocupan la pantalla completa)
+  // Login y registro: sin layout, ocupan toda la pantalla
   {
     path: "login",
     title: "Iniciar sesión — Salón de Belleza Familiar",
@@ -61,7 +61,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Panel del administrador
+  // Panel del admin
   {
     path: "admin",
     canActivate: [authGuard, rolGuard("ADMINISTRADOR")],

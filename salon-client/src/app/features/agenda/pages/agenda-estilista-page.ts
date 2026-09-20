@@ -5,14 +5,11 @@ import { AuthService } from "../../../core/services/auth.service";
 interface Cita {
   readonly cliente: string;
   readonly servicio: string;
-  /** Resalta la cita en dorado (por ejemplo, las citas a domicilio). */
+  // Pinta la cita en dorado, por ejemplo las de domicilio.
   readonly domicilio?: boolean;
 }
 
-/**
- * Agenda semanal de la estilista (mockup 05).
- * Las citas son datos de muestra hasta conectar el endpoint de agenda.
- */
+// Agenda semanal (mockup 05). Citas de muestra hasta conectar el endpoint.
 @Component({
   selector: "app-agenda-estilista-page",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -81,7 +78,7 @@ export class AgendaEstilistaPage {
   protected readonly dias = ["Lun", "Mar", "Mié", "Jue", "Vie"] as const;
   protected readonly horas = ["10:00", "11:00", "12:00"] as const;
 
-  /** Citas de muestra indexadas por "dia-hora". */
+  // Citas de muestra, la llave es "dia-hora".
   private readonly citas: Readonly<Record<string, Cita>> = {
     "Mar-10:00": { cliente: "Ana G.", servicio: "Corte" },
     "Lun-11:00": { cliente: "Luis P.", servicio: "Barba", domicilio: true },

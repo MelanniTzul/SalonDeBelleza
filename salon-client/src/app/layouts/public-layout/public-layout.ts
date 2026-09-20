@@ -49,7 +49,7 @@ import { MenuUsuario } from "../../shared/components/menu-usuario/menu-usuario";
 export class PublicLayout {
   protected readonly auth = inject(AuthService);
 
-  // Nombre del salón: se cambia aquí y se actualiza en todo el sitio
+  // Se cambia aqui y se actualiza en todo el sitio
   readonly nombre = "Salón de Belleza Familiar";
 
   protected readonly rutaPanel = computed(() => {

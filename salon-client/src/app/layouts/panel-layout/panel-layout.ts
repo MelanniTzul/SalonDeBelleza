@@ -4,7 +4,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
 import { AuthService } from "../../core/services/auth.service";
 import { MenuUsuario } from "../../shared/components/menu-usuario/menu-usuario";
 
-/** Contenedor de las pantallas del cliente y de la estilista. */
+// Envoltorio de las pantallas del cliente y de la estilista.
 @Component({
   selector: "app-panel-layout",
   imports: [RouterLink, RouterLinkActive, RouterOutlet, MenuUsuario],

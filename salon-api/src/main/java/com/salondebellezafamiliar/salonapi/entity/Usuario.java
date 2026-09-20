@@ -2,6 +2,8 @@ package com.salondebellezafamiliar.salonapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
 
 import java.time.LocalDateTime;
 
@@ -45,9 +47,12 @@ public class Usuario {
     @Column(nullable = false)
     private boolean activo = true;
 
+    // Las pone MySQL, por eso se leen de vuelta despues de guardar.
+    @Generated(event = EventType.INSERT)
     @Column(name = "creado_en", insertable = false, updatable = false)
     private LocalDateTime creadoEn;
 
+    @Generated(event = {EventType.INSERT, EventType.UPDATE})
     @Column(name = "actualizado_en", insertable = false, updatable = false)
     private LocalDateTime actualizadoEn;
 }

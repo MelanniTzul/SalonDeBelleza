@@ -1,6 +1,5 @@
 package com.salondebellezafamiliar.salonapi.security;
 
-// Spring Boot 4 usa Jackson 3 (paquete tools.jackson) para serializar las respuestas.
 import tools.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,10 +16,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-/**
- * Devuelve 401 y 403 como JSON con el mismo formato que el resto de errores de
- * la API, en lugar de la página HTML por defecto de Spring Security.
- */
+// Devuelve 401 y 403 como JSON, no como la pagina HTML de Spring Security.
+// Ojo: el ObjectMapper es el de Jackson 3 (tools.jackson), Boot 4 ya no trae el otro.
 @Component
 @RequiredArgsConstructor
 public class RespuestaErrorSeguridad implements AuthenticationEntryPoint, AccessDeniedHandler {

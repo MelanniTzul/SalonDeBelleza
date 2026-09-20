@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
 
 import { MenuUsuario } from "../../shared/components/menu-usuario/menu-usuario";
 
-/** Panel del administrador: barra lateral vino oscuro, igual que el mockup 06. */
+// Panel del admin: barra lateral vino oscuro, como el mockup 06.
 @Component({
   selector: "app-admin-layout",
   imports: [RouterLink, RouterLinkActive, RouterOutlet, MenuUsuario],

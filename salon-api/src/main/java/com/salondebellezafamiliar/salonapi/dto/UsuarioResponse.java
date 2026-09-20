@@ -1,24 +1,40 @@
 package com.salondebellezafamiliar.salonapi.dto;
 
 import com.salondebellezafamiliar.salonapi.entity.Usuario;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-/** Datos del usuario autenticado que consume el frontend. */
+import java.time.LocalDateTime;
+
+@Schema(description = "Datos publicos de un usuario")
 public record UsuarioResponse(
         Long id,
         String nombre,
         String apellido,
         String email,
         String telefono,
-        String rol
+        String rol,
+        boolean activo,
+
+        @Schema(description = "Solo viene con dato si el usuario es ESTILISTA")
+        String especialidad,
+
+        LocalDateTime creadoEn
 ) {
     public static UsuarioResponse desde(Usuario usuario) {
+        return desde(usuario, null);
+    }
+
+    public static UsuarioResponse desde(Usuario usuario, String especialidad) {
         return new UsuarioResponse(
                 usuario.getId(),
                 usuario.getNombre(),
                 usuario.getApellido(),
                 usuario.getEmail(),
                 usuario.getTelefono(),
-                usuario.getRol().name()
+                usuario.getRol().name(),
+                usuario.isActivo(),
+                especialidad,
+                usuario.getCreadoEn()
         );
     }
 }

@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 
 import { AuthService } from "../../../core/services/auth.service";
 
-/** Avatar con iniciales, nombre del usuario y botón para cerrar sesión. */
+// Avatar con iniciales y boton de cerrar sesion.
 @Component({
   selector: "app-menu-usuario",
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,4 @@
-/** Roles que maneja el sistema. Debe coincidir con el enum Rol del backend. */
+// Tiene que coincidir con el enum Rol del backend.
 export type Rol = "CLIENTE" | "ESTILISTA" | "ADMINISTRADOR";
 
 export interface Usuario {
@@ -30,14 +30,14 @@ export interface AuthResponse {
   readonly usuario: Usuario;
 }
 
-/** Formato de error unificado que devuelve la API. */
+// Formato de error que devuelve la API.
 export interface ApiError {
   readonly status: number;
   readonly mensaje: string;
   readonly campos?: Record<string, string>;
 }
 
-/** Ruta de inicio de cada rol después de autenticarse. */
+// A donde cae cada rol despues del login.
 export const RUTA_INICIO_POR_ROL: Record<Rol, string> = {
   ADMINISTRADOR: "/admin",
   ESTILISTA: "/estilista",

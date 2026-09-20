@@ -34,8 +34,8 @@ public class AuthService {
                 .email(email)
                 .telefono(request.telefono() == null || request.telefono().isBlank() ? null : request.telefono().trim())
                 .passwordHash(passwordEncoder.encode(request.password()))
-                // El registro público siempre crea clientes: estilistas y administradores
-                // los da de alta el administrador desde el panel.
+                // El registro publico solo crea clientes. Estilistas y admins los da de alta
+                // el admin en /api/admin/usuarios.
                 .rol(Rol.CLIENTE)
                 .build();
         usuarioRepository.save(usuario);
@@ -47,8 +47,8 @@ public class AuthService {
         String email = normalizar(request.email());
         Usuario usuario = usuarioRepository.findByEmail(email).orElse(null);
 
-        // Se comprueba la contraseña incluso si el usuario no existe para que el
-        // tiempo de respuesta no revele qué correos están registrados.
+        // Se revisa la contrasena aunque el usuario no exista, para no delatar
+        // que correos estan registrados por el tiempo de respuesta.
         boolean credencialesValidas = usuario != null
                 && usuario.isActivo()
                 && passwordEncoder.matches(request.password(), usuario.getPasswordHash());
