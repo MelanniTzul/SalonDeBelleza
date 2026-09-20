@@ -1,4 +1,4 @@
-package com.salondebellezafamiliar.salonapi.auth.service;
+package com.salondebellezafamiliar.salonapi.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

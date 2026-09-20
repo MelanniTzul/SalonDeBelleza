@@ -1,4 +1,4 @@
-package com.salondebellezafamiliar.salonapi.auth.dto;
+package com.salondebellezafamiliar.salonapi.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

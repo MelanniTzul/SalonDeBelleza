@@ -1,4 +1,4 @@
-package com.salondebellezafamiliar.salonapi.auth.entity;
+package com.salondebellezafamiliar.salonapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

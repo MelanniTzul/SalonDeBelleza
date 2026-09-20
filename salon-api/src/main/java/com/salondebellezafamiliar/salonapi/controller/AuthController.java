@@ -1,9 +1,9 @@
-package com.salondebellezafamiliar.salonapi.auth.controller;
+package com.salondebellezafamiliar.salonapi.controller;
 
-import com.salondebellezafamiliar.salonapi.auth.dto.AuthResponse;
-import com.salondebellezafamiliar.salonapi.auth.dto.LoginRequest;
-import com.salondebellezafamiliar.salonapi.auth.dto.RegistroRequest;
-import com.salondebellezafamiliar.salonapi.auth.service.AuthService;
+import com.salondebellezafamiliar.salonapi.dto.AuthResponse;
+import com.salondebellezafamiliar.salonapi.dto.LoginRequest;
+import com.salondebellezafamiliar.salonapi.dto.RegistroRequest;
+import com.salondebellezafamiliar.salonapi.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

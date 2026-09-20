@@ -1,11 +1,11 @@
-package com.salondebellezafamiliar.salonapi.auth.service;
+package com.salondebellezafamiliar.salonapi.service;
 
-import com.salondebellezafamiliar.salonapi.auth.dto.AuthResponse;
-import com.salondebellezafamiliar.salonapi.auth.dto.LoginRequest;
-import com.salondebellezafamiliar.salonapi.auth.dto.RegistroRequest;
-import com.salondebellezafamiliar.salonapi.auth.entity.Rol;
-import com.salondebellezafamiliar.salonapi.auth.entity.Usuario;
-import com.salondebellezafamiliar.salonapi.auth.repository.UsuarioRepository;
+import com.salondebellezafamiliar.salonapi.dto.AuthResponse;
+import com.salondebellezafamiliar.salonapi.dto.LoginRequest;
+import com.salondebellezafamiliar.salonapi.dto.RegistroRequest;
+import com.salondebellezafamiliar.salonapi.entity.Rol;
+import com.salondebellezafamiliar.salonapi.entity.Usuario;
+import com.salondebellezafamiliar.salonapi.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;

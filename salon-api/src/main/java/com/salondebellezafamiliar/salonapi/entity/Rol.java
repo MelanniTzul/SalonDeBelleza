@@ -1,4 +1,4 @@
-package com.salondebellezafamiliar.salonapi.auth.entity;
+package com.salondebellezafamiliar.salonapi.entity;
 
 public enum Rol {
     CLIENTE,

@@ -1,4 +1,4 @@
-package com.salondebellezafamiliar.salonapi.auth.dto;
+package com.salondebellezafamiliar.salonapi.dto;
 
 public record AuthResponse(
         String token,
