@@ -1,6 +1,16 @@
-<main class="min-h-screen flex flex-col items-center justify-center gap-4 bg-surface-50 p-8">
-  <h1 class="text-3xl font-semibold text-primary">Salón de Belleza Familiar</h1>
-  <p class="text-surface-600">PrimeNG 21 y Tailwind 4 funcionando juntos</p>
-  <p-button label="Botón de PrimeNG" icon="pi pi-check" />
+<main class="min-h-screen flex flex-col items-center justify-center gap-6 p-8">
+  <span class="text-xs tracking-widest uppercase font-semibold text-wine">Salón de belleza</span>
+  <h1 class="font-serif text-5xl font-semibold text-ink">Tu cita, sin llamadas ni esperas</h1>
+  <p class="text-muted">Tema vino, dorado y marfil aplicado</p>
+  <div class="flex gap-3">
+    <p-button label="Agendar cita" />
+    <p-button label="Iniciar sesión" [outlined]="true" />
+  </div>
+  <div class="flex gap-2">
+    <span class="h-8 w-8 rounded-full bg-wine"></span>
+    <span class="h-8 w-8 rounded-full bg-gold"></span>
+    <span class="h-8 w-8 rounded-full bg-sage"></span>
+    <span class="h-8 w-8 rounded-full bg-blush"></span>
+  </div>
 </main>
 <router-outlet />
