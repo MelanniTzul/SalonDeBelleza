@@ -16,5 +16,22 @@ services:
       timeout: 5s
       retries: 10
 
+  backend:
+    build: ./salon-api
+    container_name: salon-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_NAME: ${DB_NAME:?}
+      DB_USER: ${DB_USER:-root}
+      DB_PASSWORD: ${DB_PASSWORD:?}
+      JWT_SECRET: ${JWT_SECRET:?}
+    ports:
+      - "8080:8080"
+
 volumes:
   mysql_data:
