@@ -75,22 +75,10 @@ npm --prefix salon-client test
 ```
 
 ```bash
-cd salon-api && ./gradlew test --tests '*AuthServiceTest' --tests '*JwtServiceTest'
+cd salon-api && ./gradlew test --tests '*ServiceTest'
 ```
 
 `./gradlew test` completo incluye `SalonApiApplicationTests`, que necesita la base de datos levantada.
-
-## API
-
-Documentación interactiva en `http://localhost:8080/docs` con la API corriendo.
-
-| Método | Ruta | Acceso |
-|---|---|---|
-| `POST` | `/api/auth/register` | Público |
-| `POST` | `/api/auth/login` | Público |
-| `GET` | `/api/auth/me` | Requiere token |
-
-El token se manda en `Authorization: Bearer <token>` y dura 60 minutos.
 
 ## Notas
 

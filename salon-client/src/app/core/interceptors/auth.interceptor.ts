@@ -6,10 +6,8 @@ import { catchError, throwError } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { AuthService } from "../services/auth.service";
 
-/**
- * Añade el token a las peticiones dirigidas a la API y cierra la sesión
- * automáticamente cuando el backend responde 401 (token vencido o inválido).
- */
+// Pega el token en las peticiones a la API y cierra la sesion sola si
+// el backend responde 401.
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const router = inject(Router);

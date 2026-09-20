@@ -42,16 +42,16 @@ public class SecurityConfig {
                 .authenticationEntryPoint(respuestaErrorSeguridad)
                 .accessDeniedHandler(respuestaErrorSeguridad))
             .authorizeHttpRequests(auth -> auth
-                // Documentación y salud del servicio
+                // Documentacion y salud
                 .requestMatchers("/docs", "/docs/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/actuator/health", "/error").permitAll()
-                // Autenticación pública
+                // Login y registro abiertos
                 .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                // El navegador envía OPTIONS antes de cada petición con token (preflight)
+                // El navegador manda OPTIONS antes de cada peticion con token
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                // Catálogo público: servicios y productos se consultan sin iniciar sesión
+                // El catalogo se ve sin iniciar sesion
                 .requestMatchers(HttpMethod.GET, "/api/catalogo/**").permitAll()
-                // Zonas privadas por rol
+                // Zonas por rol
                 .requestMatchers("/api/admin/**").hasRole("ADMINISTRADOR")
                 .requestMatchers("/api/estilista/**").hasAnyRole("ESTILISTA", "ADMINISTRADOR")
                 .requestMatchers("/api/cliente/**").hasAnyRole("CLIENTE", "ADMINISTRADOR")

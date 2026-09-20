@@ -14,10 +14,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Unifica el formato de los errores de la API para que el frontend siempre
- * pueda leer el campo "mensaje".
- */
+// Todos los errores salen igual, con un campo "mensaje" que el front muestra tal cual.
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -43,7 +40,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> general(Exception ex, HttpServletRequest request) {
-        // El detalle queda en el log; al cliente no se le expone la traza.
+        // La traza va al log, no al cliente.
         log.error("Error no controlado en {}", request.getRequestURI(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(base(HttpStatus.INTERNAL_SERVER_ERROR, "Ocurrió un error inesperado", request));

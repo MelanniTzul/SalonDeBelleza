@@ -20,8 +20,7 @@ public class JwtService {
     public JwtService(@Value("${app.jwt.secret}") String secret,
                       @Value("${app.jwt.expiration-minutes}") long expirationMinutes) {
         byte[] bytes = secret.getBytes(StandardCharsets.UTF_8);
-        // HS256 exige una clave de al menos 256 bits; si es más corta el token
-        // sería trivial de falsificar, así que se corta el arranque.
+        // Con menos de 256 bits el token se falsifica facil, mejor no arrancar.
         if (bytes.length < 32) {
             throw new IllegalStateException(
                     "app.jwt.secret debe tener al menos 32 caracteres (256 bits) para firmar tokens HS256");
@@ -42,7 +41,7 @@ public class JwtService {
                 .compact();
     }
 
-    /** Lanza JwtException si el token está expirado, alterado o mal formado. */
+    // Revienta con JwtException si el token esta vencido o manipulado.
     public Claims leerClaims(String token) {
         return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
     }

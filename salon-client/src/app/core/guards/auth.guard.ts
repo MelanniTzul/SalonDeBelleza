@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from "@angular/router";
 
 import { AuthService } from "../services/auth.service";
 
-/** Deja pasar solo a usuarios con sesión iniciada; el resto va al login. */
+// Solo pasa quien tenga sesion, el resto al login.
 export const authGuard: CanActivateFn = (_ruta, estado) => {
   const auth = inject(AuthService);
   const router = inject(Router);
@@ -11,6 +11,6 @@ export const authGuard: CanActivateFn = (_ruta, estado) => {
   if (auth.autenticado()) {
     return true;
   }
-  // Se recuerda a dónde iba el usuario para devolverlo ahí tras iniciar sesión.
+  // Guarda a donde iba para devolverlo ahi despues del login.
   return router.createUrlTree(["/login"], { queryParams: { redirigir: estado.url } });
 };

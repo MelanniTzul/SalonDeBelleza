@@ -13,10 +13,7 @@ interface Cita {
   readonly total: string;
 }
 
-/**
- * Pantalla de inicio del cliente: sus citas en formato ticket (mockup 04).
- * Las citas son datos de muestra hasta conectar el endpoint de reservas.
- */
+// Inicio del cliente, sus citas como tickets (mockup 04). Datos de muestra.
 @Component({
   selector: "app-mis-citas-page",
   imports: [RouterLink],

@@ -8,10 +8,8 @@ import { ApiError, AuthResponse, LoginRequest, RegistroRequest, Rol, Usuario } f
 const CLAVE_TOKEN = "salon.token";
 const CLAVE_USUARIO = "salon.usuario";
 
-/**
- * Única fuente de verdad de la sesión: guarda el token y el usuario en signals
- * y los replica en localStorage para que la sesión sobreviva a un refresco.
- */
+// La sesion vive aqui: token y usuario en signals, copiados a localStorage
+// para que aguante un F5.
 @Injectable({ providedIn: "root" })
 export class AuthService {
   private readonly http = inject(HttpClient);
@@ -54,7 +52,7 @@ export class AuthService {
     );
   }
 
-  /** Revalida el token contra la API y refresca los datos del usuario. */
+  // Revalida el token contra la API y refresca los datos.
   refrescarPerfil(): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.base}/me`).pipe(
       tap(usuario => {
@@ -95,7 +93,7 @@ export class AuthService {
     try {
       return JSON.parse(guardado) as Usuario;
     } catch {
-      // El dato guardado quedó corrupto: se descarta para no romper la app.
+      // Dato corrupto, se tira para no romper la app.
       localStorage.removeItem(CLAVE_USUARIO);
       return null;
     }

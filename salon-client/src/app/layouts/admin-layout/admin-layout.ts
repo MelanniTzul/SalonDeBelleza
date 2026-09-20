@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
 
 import { MenuUsuario } from "../../shared/components/menu-usuario/menu-usuario";
 
-/** Panel del administrador: barra lateral vino oscuro, igual que el mockup 06. */
+// Panel del admin: barra lateral vino oscuro, como el mockup 06.
 @Component({
   selector: "app-admin-layout",
   imports: [RouterLink, RouterLinkActive, RouterOutlet, MenuUsuario],
@@ -51,7 +51,7 @@ export class AdminLayout {
   protected readonly enlaces = [
     { ruta: "/admin", texto: "Panel", exacto: true },
     { ruta: "/admin/citas", texto: "Citas", exacto: false },
-    { ruta: "/admin/estilistas", texto: "Estilistas", exacto: false },
+    { ruta: "/admin/usuarios", texto: "Usuarios", exacto: false },
     { ruta: "/admin/catalogo", texto: "Servicios y productos", exacto: false },
     { ruta: "/admin/reportes", texto: "Reportes", exacto: false }
   ];

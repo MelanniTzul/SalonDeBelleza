@@ -4,10 +4,8 @@ import { CanActivateFn, Router } from "@angular/router";
 import { RUTA_INICIO_POR_ROL, Rol } from "../models/auth.models";
 import { AuthService } from "../services/auth.service";
 
-/**
- * Restringe una ruta a ciertos roles. Si el usuario está autenticado pero con
- * otro rol se le manda a su propio panel en lugar de mostrarle un error.
- */
+// Limita una ruta a ciertos roles. Si el rol no cuadra lo manda a su propio
+// panel en vez de tirarle un error.
 export const rolGuard = (...rolesPermitidos: readonly Rol[]): CanActivateFn => {
   return (_ruta, estado) => {
     const auth = inject(AuthService);
