@@ -25,7 +25,8 @@ public record CrearUsuarioRequest(
         @Schema(description = "Minimo 8 caracteres", example = "Estilista1234!")
         @NotBlank @Size(min = 8, max = 72) String password,
 
-        @Schema(description = "Rol del usuario nuevo")
+        @Schema(description = "Rol del usuario nuevo. No se permite ADMINISTRADOR.",
+                allowableValues = {"ESTILISTA", "CLIENTE"})
         @NotNull Rol rol,
 
         @Schema(description = "Solo aplica si el rol es ESTILISTA", example = "Corte y color")

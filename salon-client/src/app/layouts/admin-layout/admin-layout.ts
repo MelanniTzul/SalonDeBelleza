@@ -51,7 +51,7 @@ export class AdminLayout {
   protected readonly enlaces = [
     { ruta: "/admin", texto: "Panel", exacto: true },
     { ruta: "/admin/citas", texto: "Citas", exacto: false },
-    { ruta: "/admin/estilistas", texto: "Estilistas", exacto: false },
+    { ruta: "/admin/usuarios", texto: "Usuarios", exacto: false },
     { ruta: "/admin/catalogo", texto: "Servicios y productos", exacto: false },
     { ruta: "/admin/reportes", texto: "Reportes", exacto: false }
   ];

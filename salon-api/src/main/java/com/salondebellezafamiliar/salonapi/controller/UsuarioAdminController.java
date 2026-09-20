@@ -54,10 +54,11 @@ public class UsuarioAdminController {
     }
 
     @PostMapping
-    @Operation(summary = "Crea un usuario con cualquier rol",
-               description = "Es la unica via para dar de alta estilistas y administradores. "
-                           + "Si el rol es ESTILISTA tambien se crea su ficha con la especialidad.")
+    @Operation(summary = "Crea una estilista o un cliente",
+               description = "Es la unica via para dar de alta estilistas. Si el rol es ESTILISTA "
+                           + "tambien se crea su ficha con la especialidad. No se permite crear administradores.")
     @ApiResponse(responseCode = "201", description = "Usuario creado")
+    @ApiResponse(responseCode = "403", description = "Se intento crear un ADMINISTRADOR", content = @Content())
     @ApiResponse(responseCode = "409", description = "Ese correo ya esta registrado", content = @Content())
     public ResponseEntity<UsuarioResponse> crear(@Valid @RequestBody CrearUsuarioRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.crear(request));

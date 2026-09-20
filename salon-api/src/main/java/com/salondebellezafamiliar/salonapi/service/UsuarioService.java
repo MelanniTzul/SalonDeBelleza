@@ -41,6 +41,12 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioResponse crear(CrearUsuarioRequest request) {
+        // Nadie crea administradores desde la app; el admin sale de la migracion inicial.
+        if (request.rol() == Rol.ADMINISTRADOR) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "No se pueden crear administradores desde el sistema");
+        }
+
         String email = normalizar(request.email());
         if (usuarioRepository.existsByEmail(email)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo ya esta registrado");

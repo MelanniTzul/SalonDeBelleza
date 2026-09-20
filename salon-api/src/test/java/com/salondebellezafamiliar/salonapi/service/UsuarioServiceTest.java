@@ -98,6 +98,26 @@ class UsuarioServiceTest {
     }
 
     @Test
+    void noDejaCrearOtroAdministrador() {
+        assertThatThrownBy(() -> usuarioService.crear(new CrearUsuarioRequest(
+                "Nuevo", "Admin", "otroadmin@salon.com", null, "Password123", Rol.ADMINISTRADOR, null)))
+                .isInstanceOf(ResponseStatusException.class)
+                .extracting(e -> ((ResponseStatusException) e).getStatusCode())
+                .isEqualTo(HttpStatus.FORBIDDEN);
+
+        verify(usuarioRepository, never()).save(any());
+    }
+
+    @Test
+    void siDejaCrearClientes() {
+        when(usuarioRepository.existsByEmail("walkin@correo.com")).thenReturn(false);
+
+        assertThat(usuarioService.crear(new CrearUsuarioRequest(
+                "Sofia", "Perez", "walkin@correo.com", null, "Password123", Rol.CLIENTE, null)).rol())
+                .isEqualTo("CLIENTE");
+    }
+
+    @Test
     void noPermiteCrearConCorreoRepetido() {
         when(usuarioRepository.existsByEmail("marisol@salon.com")).thenReturn(true);
 

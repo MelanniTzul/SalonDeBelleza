@@ -75,47 +75,10 @@ npm --prefix salon-client test
 ```
 
 ```bash
-cd salon-api && ./gradlew test --tests '*AuthServiceTest' --tests '*JwtServiceTest'
+cd salon-api && ./gradlew test --tests '*ServiceTest'
 ```
 
 `./gradlew test` completo incluye `SalonApiApplicationTests`, que necesita la base de datos levantada.
-
-## API
-
-Documentación interactiva en **`http://localhost:8080/docs`** con la API corriendo.
-
-Para probar endpoints protegidos desde Swagger: hacer `POST /api/auth/login`, copiar el `token` de la respuesta y pegarlo en el botón **Authorize** de arriba a la derecha (solo el token, sin escribir `Bearer`).
-
-### Autenticación
-
-| Método | Ruta | Acceso |
-|---|---|---|
-| `POST` | `/api/auth/register` | Público — **siempre crea CLIENTE** |
-| `POST` | `/api/auth/login` | Público |
-| `GET` | `/api/auth/me` | Requiere token |
-
-### Usuarios — solo administrador
-
-Es la única vía para dar de alta estilistas.
-
-| Método | Ruta | Qué hace |
-|---|---|---|
-| `GET` | `/api/admin/usuarios` | Lista con filtros `rol`, `activo`, `busqueda` y paginación |
-| `GET` | `/api/admin/usuarios/{id}` | Trae uno |
-| `POST` | `/api/admin/usuarios` | Crea con cualquier rol; si es `ESTILISTA` también crea su ficha |
-| `PUT` | `/api/admin/usuarios/{id}` | Edita datos (no toca rol ni contraseña) |
-| `DELETE` | `/api/admin/usuarios/{id}` | **Desactiva** — pone `activo=false`, no borra |
-| `PATCH` | `/api/admin/usuarios/{id}/activar` | Reactiva |
-| `PATCH` | `/api/admin/usuarios/{id}/password` | Reinicia la contraseña |
-
-Reglas que aplica el backend:
-
-- Quien se registra desde la página principal siempre queda como `CLIENTE`, aunque mande otro rol en el JSON.
-- Un usuario desactivado no puede iniciar sesión.
-- Un administrador no puede desactivarse a sí mismo.
-- Desactivar una estilista también desactiva su ficha en `estilistas`.
-
-El token se manda en `Authorization: Bearer <token>` y dura 60 minutos.
 
 ## Notas
 

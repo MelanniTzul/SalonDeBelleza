@@ -72,6 +72,11 @@ export const routes: Routes = [
         title: "Panel — Salón de Belleza Familiar",
         loadComponent: () =>
           import("./features/reportes/pages/admin-dashboard-page").then(m => m.AdminDashboardPage)
+      },
+      {
+        path: "usuarios",
+        title: "Usuarios — Salón de Belleza Familiar",
+        loadComponent: () => import("./features/usuarios/pages/usuarios-page").then(m => m.UsuariosPage)
       }
     ]
   },
