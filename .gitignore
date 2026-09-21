@@ -4,14 +4,13 @@
 !.env.example
 
 node_modules/
-<<<<<<< HEAD
+
+# Archivos de trabajo
 mockups.html
 .claude
-=======
 
 # Sistema y editores
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
->>>>>>> feature/Servicios

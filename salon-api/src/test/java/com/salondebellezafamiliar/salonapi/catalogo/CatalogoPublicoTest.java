@@ -93,6 +93,22 @@ class CatalogoPublicoTest extends BaseApiTest {
     }
 
     @Test
+    @DisplayName("Los errores de Spring conservan su código 4xx (no se vuelven 500) y traen \"mensaje\"")
+    void erroresConservanSuCodigo() throws Exception {
+        // valor inválido para un enum
+        mvc.perform(get("/api/categorias").param("tipo", "XYZ"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.mensaje", notNullValue()));
+        // ruta pública que no existe (las rutas privadas que no existen piden sesión antes: 401)
+        mvc.perform(get("/api/servicios/a/b/c")).andExpect(status().isNotFound()).andExpect(jsonPath("$.mensaje", notNullValue()));
+        mvc.perform(get("/api/no-existe")).andExpect(status().isUnauthorized());
+        // imagen que no existe
+        mvc.perform(get("/uploads/productos/inexistente.jpg")).andExpect(status().isNotFound());
+        // método no permitido
+        mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete("/api/servicios/tintes-cabello"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     @DisplayName("Las escrituras no están permitidas en las rutas públicas")
     void noSePuedeEscribirSinSesion() throws Exception {
         mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/api/servicios")

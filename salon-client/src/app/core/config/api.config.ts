@@ -1,9 +1,14 @@
 import { InjectionToken } from "@angular/core";
 
-// Dirección base de la API. Vacía = mismo origen: en desarrollo el servidor de Angular reenvía /api y /uploads
-// al backend (proxy.conf.mjs) y en producción lo hace el servidor web. Si el backend está en otro dominio,
-// se define aquí (y ese dominio debe estar en CORS_ALLOWED_ORIGINS del backend).
-export const API_URL = new InjectionToken<string>("API_URL", { providedIn: "root", factory: () => "" });
+import { environment } from "../../../environments/environment";
+
+// Dirección de la API sin el "/api" final (ej. "http://localhost:8080"). Sale de environment.apiUrl,
+// la misma configuración que usa el login: al desplegar solo se cambia ese valor.
+// El backend debe tener el dominio del frontend en CORS_ALLOWED_ORIGINS.
+export const API_URL = new InjectionToken<string>("API_URL", {
+  providedIn: "root",
+  factory: () => environment.apiUrl.replace(/\/api\/?$/, "")
+});
 
 // Las rutas de imagen que guarda la base son relativas:
 //  - "img/..."     → imágenes incluidas en el frontend

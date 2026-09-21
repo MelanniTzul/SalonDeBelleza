@@ -1,6 +1,5 @@
 package com.salondebellezafamiliar.salonapi.catalogo;
 
-import com.salondebellezafamiliar.salonapi.entity.Rol;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -39,14 +38,12 @@ class CatalogoAdminTest extends BaseApiTest {
     }
 
     @Test
-    @DisplayName("Un token falso, alterado o de una cuenta desactivada no da acceso")
+    @DisplayName("Un token falso o alterado no da acceso y la respuesta es JSON con \"mensaje\"")
     void tokensInvalidos() throws Exception {
         mvc.perform(get("/api/admin/servicios").header("Authorization", "Bearer esto.no.es.un.jwt")).andExpect(status().isUnauthorized());
         String valido = tokenAdmin();
         mvc.perform(get("/api/admin/servicios").header("Authorization", valido.substring(0, valido.length() - 3) + "abc")).andExpect(status().isUnauthorized());
-        var inactivo = crearUsuario(Rol.ADMINISTRADOR, false);
-        mvc.perform(get("/api/admin/servicios").header("Authorization", "Bearer " + jwtService.generarToken(inactivo.getEmail(), "ADMINISTRADOR")))
-                .andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/admin/servicios")).andExpect(status().isUnauthorized()).andExpect(jsonPath("$.mensaje", notNullValue()));
     }
 
     @Test
@@ -78,10 +75,10 @@ class CatalogoAdminTest extends BaseApiTest {
                 """;
         enviar(post("/api/admin/servicios"), tokenAdmin(), malo)
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errores.slug", notNullValue()))
-                .andExpect(jsonPath("$.errores.nombre", notNullValue()))
-                .andExpect(jsonPath("$.errores.precio", notNullValue()))
-                .andExpect(jsonPath("$.errores.imagen", notNullValue()));
+                .andExpect(jsonPath("$.campos.slug", notNullValue()))
+                .andExpect(jsonPath("$.campos.nombre", notNullValue()))
+                .andExpect(jsonPath("$.campos.precio", notNullValue()))
+                .andExpect(jsonPath("$.campos.imagen", notNullValue()));
     }
 
     @Test

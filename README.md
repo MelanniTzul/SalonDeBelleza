@@ -1,6 +1,5 @@
 # Salón de Belleza Familiar
 
-<<<<<<< HEAD
 Sistema de agendamiento de citas. Backend en Spring Boot (`salon-api`) y frontend en Angular (`salon-client`).
 
 ## Requisitos
@@ -33,7 +32,7 @@ Rellenar en `.env`:
 docker compose up -d --build
 ```
 
-Arranca MySQL y la API en `http://localhost:8080`. Flyway crea el esquema y los usuarios de prueba en el primer arranque.
+Arranca MySQL y la API en `http://localhost:8080`. Flyway crea el esquema, los usuarios de prueba y el catálogo inicial en el primer arranque. Swagger: <http://localhost:8080/docs>.
 
 El frontend se levanta aparte:
 
@@ -57,58 +56,10 @@ Y correr la API desde el código, cargando el `.env` (Gradle no lo lee solo):
 set -a && . ./.env && set +a && cd salon-api && ./gradlew bootRun
 ```
 
-## Usuarios de prueba
-
-Creados por la migración `V3__usuarios_demo.sql`. **Cambiarlos antes de cualquier despliegue real.**
-
-| Rol | Correo | Contraseña | Pantalla tras iniciar sesión |
-|---|---|---|---|
-| Administrador | `admin@salondebellezafamiliar.com` | `Admin1234!` | `/admin` |
-| Estilista | `marisol@salondebellezafamiliar.com` | `Estilista1234!` | `/estilista` |
-| Cliente | `cliente@correo.com` | `Cliente1234!` | `/mi-cuenta` |
-
-Quien se registre desde `/registro` siempre queda como `CLIENTE`.
-
-## Pruebas
-
-```bash
-npm --prefix salon-client test
-```
-
-```bash
-cd salon-api && ./gradlew test --tests '*ServiceTest'
-```
-
-`./gradlew test` completo incluye `SalonApiApplicationTests`, que necesita la base de datos levantada.
-
-## Notas
-
-- `/actuator/health` responde `DOWN` si `MAIL_USERNAME` y `MAIL_PASSWORD` están vacíos: es el chequeo de correo, la API funciona igual.
-- `docker compose down -v` borra también la base de datos; sin `-v` conserva los datos.
-=======
-Sitio web y sistema de agendamiento del salón. Monorepo con:
-
-- `salon-api/` — backend (Spring Boot 4, Java 21, MySQL 8, Flyway).
-- `salon-client/` — frontend (Angular 21, Tailwind 4, PrimeNG).
-
-## Cómo ejecutarlo
-
-```bash
-cp .env.example .env            # completar DB_NAME, DB_PASSWORD, JWT_SECRET
-docker compose up -d --build    # MySQL + backend en http://localhost:8080
-
-cd salon-client
-npm install
-npm start                       # http://localhost:4200
-```
-
-En desarrollo, `npm start` reenvía `/api` y `/uploads` al backend (`proxy.conf.mjs`), así no hay problemas de CORS.
-Para usar otro backend: `API_URL=http://localhost:8090 npm start`.
-
 ## Catálogo: servicios, productos y cortes
 
 Todo el catálogo vive en la base de datos y el sitio lo consume por la API. Las tablas las crea Flyway
-(`V3__catalogo.sql` también carga los datos iniciales). Swagger: <http://localhost:8080/docs>.
+(`V4__catalogo.sql` también carga los datos iniciales). Swagger: <http://localhost:8080/docs>.
 
 **Público (sin sesión, solo lectura)**
 
@@ -146,19 +97,40 @@ Las rutas que se guardan en servicios, productos y cortes solo pueden empezar po
 
 ### Producción
 
-- El frontend y la API deben quedar bajo el mismo dominio (el servidor web reenvía `/api` y `/uploads` al backend),
-  o bien definir `API_URL` en `salon-client/src/app/core/config/api.config.ts` y agregar el dominio del frontend a
-  `CORS_ALLOWED_ORIGINS`.
-- Cambiar la contraseña del administrador de prueba (`V1__init_schema.sql`) y `JWT_SECRET`.
+- La dirección de la API se define en `salon-client/src/environments/environment.ts` (`apiUrl`), la misma que usa el login.
+  El dominio del frontend debe estar en `CORS_ALLOWED_ORIGINS` del backend.
+- Cambiar las contraseñas de los usuarios de prueba y `JWT_SECRET`.
 
-## Pruebas del backend
+## Usuarios de prueba
 
-Son de integración y usan una base MySQL real (Flyway aplica todas las migraciones al iniciar):
+Creados por la migración `V3__usuarios_demo.sql` (el administrador de prueba viene de `V1`). **Cambiarlos antes de cualquier despliegue real.**
+
+| Rol | Correo | Contraseña | Pantalla tras iniciar sesión |
+|---|---|---|---|
+| Administrador | `admin@salondebellezafamiliar.com` | `Admin1234!` | `/admin` |
+| Estilista | `marisol@salondebellezafamiliar.com` | `Estilista1234!` | `/estilista` |
+| Cliente | `cliente@correo.com` | `Cliente1234!` | `/mi-cuenta` |
+
+Quien se registre desde `/registro` siempre queda como `CLIENTE`.
+
+## Pruebas
 
 ```bash
-cd salon-api
+npm --prefix salon-client test
+```
+
+```bash
+cd salon-api && ./gradlew test --tests '*ServiceTest'
+```
+
+`./gradlew test` completo incluye pruebas de integración (`SalonApiApplicationTests` y las de `catalogo/`) que usan una base MySQL real:
+Flyway aplica todas las migraciones al iniciar. Conviene apuntarlas a una base **distinta** a la de trabajo:
+
+```bash
 DB_HOST=localhost DB_PORT=3307 DB_NAME=salon_test DB_USER=root DB_PASSWORD=... ./gradlew test
 ```
 
-Usa una base **distinta** a la de trabajo: cada prueba revierte lo que escribe, pero Flyway sí crea el esquema.
->>>>>>> feature/Servicios
+## Notas
+
+- `/actuator/health` responde `DOWN` si `MAIL_USERNAME` y `MAIL_PASSWORD` están vacíos: es el chequeo de correo, la API funciona igual.
+- `docker compose down -v` borra también la base de datos; sin `-v` conserva los datos.

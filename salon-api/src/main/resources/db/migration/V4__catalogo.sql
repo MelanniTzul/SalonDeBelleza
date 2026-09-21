@@ -1,5 +1,5 @@
 -- =====================================================
--- V3__catalogo.sql — Catálogo público: servicios, productos y cortes
+-- V4__catalogo.sql — Catálogo público: servicios, productos y cortes
 -- Los datos iniciales replican el catálogo que antes vivía en el frontend.
 -- Las rutas de imagen son relativas: "img/..." son imágenes del frontend y
 -- "uploads/..." son imágenes subidas por el administrador (servidas por la API).
