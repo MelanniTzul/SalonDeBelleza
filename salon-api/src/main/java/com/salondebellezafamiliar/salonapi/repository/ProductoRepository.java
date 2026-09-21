@@ -22,4 +22,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     Optional<Producto> buscarActivoPorSlug(@Param("slug") String slug);
 
     boolean existsBySlug(String slug);
+
+    Optional<Producto> findBySlug(String slug);
 }

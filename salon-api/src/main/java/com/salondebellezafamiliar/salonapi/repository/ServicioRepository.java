@@ -23,4 +23,6 @@ public interface ServicioRepository extends JpaRepository<Servicio, Long> {
     Optional<Servicio> buscarActivoPorSlug(@Param("slug") String slug);
 
     boolean existsBySlug(String slug);
+
+    Optional<Servicio> findBySlug(String slug);
 }

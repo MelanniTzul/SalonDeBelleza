@@ -7,6 +7,7 @@ import { EstadoCarga } from "../../../shared/components/estado-carga";
 import { Reveal } from "../../../shared/directives/reveal";
 import { LightboxService } from "../../../shared/services/lightbox.service";
 import { ProductoCard } from "../components/producto-card";
+import { BotonDeseo } from "../../deseos/components/boton-deseo";
 import { PASOS_USO, PASOS_USO_GENERALES, TIPO_PRODUCTO } from "../data/producto-info.data";
 import { CatalogoService } from "../services/catalogo.service";
 
@@ -15,7 +16,7 @@ const CANTIDAD_RELACIONADOS = 3;
 
 @Component({
   selector: "app-producto-detalle-page",
-  imports: [EstadoCarga, NgOptimizedImage, ProductoCard, Reveal, RouterLink],
+  imports: [BotonDeseo, EstadoCarga, NgOptimizedImage, ProductoCard, Reveal, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (!catalogo.listo()) {
@@ -80,6 +81,7 @@ const CANTIDAD_RELACIONADOS = 3;
             @if (!p.precio) {
               <p class="mt-1 text-xs text-muted">Pregunta el precio en el salón o al agendar tu cita.</p>
             }
+            <app-boton-deseo class="mt-4" tipo="producto" [slug]="p.id" [conTexto]="true" />
 
             <p class="mt-6 text-base leading-relaxed text-muted">{{ p.descripcion }}</p>
 

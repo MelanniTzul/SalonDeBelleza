@@ -10,6 +10,7 @@ import { LightboxService } from "../../../shared/services/lightbox.service";
 import { CATEGORIAS_ESTILO } from "../../inicio/data/estilos.data";
 import { CatalogoCortes } from "../components/catalogo-cortes";
 import { ServicioCard } from "../components/servicio-card";
+import { BotonDeseo } from "../../deseos/components/boton-deseo";
 import { ESTILOS_POR_SERVICIO, INFO_GENERAL, INFO_SERVICIO, PreguntaFrecuente } from "../data/servicio-info.data";
 import { CatalogoService } from "../services/catalogo.service";
 
@@ -19,7 +20,7 @@ const FOTOS_INSPIRACION = 8;
 
 @Component({
   selector: "app-servicio-detalle-page",
-  imports: [CatalogoCortes, EstadoCarga, NgOptimizedImage, Reveal, RouterLink, SeccionTitulo, ServicioCard],
+  imports: [BotonDeseo, CatalogoCortes, EstadoCarga, NgOptimizedImage, Reveal, RouterLink, SeccionTitulo, ServicioCard],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (!catalogo.listo()) {
@@ -92,6 +93,7 @@ const FOTOS_INSPIRACION = 8;
             <i class="pi pi-calendar" aria-hidden="true"></i>
             Reservar cita
           </a>
+          <app-boton-deseo class="mt-3 self-start" tipo="servicio" [slug]="s.id" [conTexto]="true" />
           <a routerLink="/servicios" class="mt-4 inline-flex items-center gap-2 self-start text-sm font-semibold text-wine transition hover:gap-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine">
             <i class="pi pi-arrow-left text-xs" aria-hidden="true"></i>
             Ver más servicios
