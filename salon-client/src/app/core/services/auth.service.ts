@@ -62,6 +62,12 @@ export class AuthService {
     );
   }
 
+  // Para cuando el usuario edita su perfil: refresca lo que ven el menu y los paneles.
+  actualizarUsuario(usuario: Usuario): void {
+    this._usuario.set(usuario);
+    localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
+  }
+
   logout(): void {
     this._token.set(null);
     this._usuario.set(null);

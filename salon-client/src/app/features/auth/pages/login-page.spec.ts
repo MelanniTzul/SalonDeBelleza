@@ -11,7 +11,7 @@ const respuestaPara = (rol: AuthResponse["usuario"]["rol"]): AuthResponse => ({
   token: "token-de-prueba",
   tipo: "Bearer",
   expiraEnSegundos: 3600,
-  usuario: { id: 1, nombre: "Ana", apellido: "R", email: "ana@correo.com", telefono: null, rol }
+  usuario: { id: 1, nombre: "Ana", apellido: "R", email: "ana@correo.com", telefono: null, fotoUrl: null, rol, especialidad: null }
 });
 
 describe("LoginPage", () => {

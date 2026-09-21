@@ -18,7 +18,9 @@ const usuario = (rol: Usuario["rol"]): Usuario => ({
   apellido: "R",
   email: "ana@correo.com",
   telefono: null,
-  rol
+  fotoUrl: null,
+  rol,
+  especialidad: null
 });
 
 const iniciarSesionComo = (rol: Usuario["rol"]): void => {

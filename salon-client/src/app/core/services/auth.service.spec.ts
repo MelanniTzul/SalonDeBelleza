@@ -16,7 +16,9 @@ const RESPUESTA: AuthResponse = {
     apellido: "Rodríguez",
     email: "ana@correo.com",
     telefono: null,
-    rol: "CLIENTE"
+    fotoUrl: null,
+    rol: "CLIENTE",
+    especialidad: null
   }
 };
 
