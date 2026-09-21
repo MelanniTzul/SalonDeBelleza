@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from "@angular/common";
 import { ChangeDetectionStrategy, Component, computed, input } from "@angular/core";
 import { RouterLink } from "@angular/router";
+import { BotonDeseo } from "../../deseos/components/boton-deseo";
 import { Servicio } from "../models/catalogo.models";
 
 // Fila del menú de servicios: miniatura, nombre, descripción, precio y duración.
@@ -8,7 +9,7 @@ import { Servicio } from "../models/catalogo.models";
 // "Agendar" y "Ver todos los cortes" quedan por encima (relative z-10) como acciones propias.
 @Component({
   selector: "app-servicio-fila",
-  imports: [NgOptimizedImage, RouterLink],
+  imports: [NgOptimizedImage, RouterLink, BotonDeseo],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <article class="group relative grid grid-cols-[auto_1fr] gap-x-4 gap-y-4 rounded-2xl border border-line bg-white p-4 transition duration-300 hover:border-wine/40 hover:shadow-lg hover:shadow-wine/10 has-[h3_a:focus-visible]:ring-2 has-[h3_a:focus-visible]:ring-wine sm:grid-cols-[auto_1fr_auto] sm:gap-x-5 sm:p-5">
@@ -57,14 +58,17 @@ import { Servicio } from "../models/catalogo.models";
             <i class="pi pi-clock text-[11px]" aria-hidden="true"></i>{{ duracion() }}
           </p>
         </div>
-        <a
-          routerLink="/agendar"
-          [queryParams]="{ servicio: servicio().id }"
-          class="relative z-10 inline-flex items-center gap-2 rounded-full bg-wine px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-wine-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wine"
-        >
-          Agendar
-          <i class="pi pi-arrow-right text-[11px]" aria-hidden="true"></i>
-        </a>
+        <div class="relative z-10 flex items-center gap-2">
+          <app-boton-deseo tipo="servicio" [slug]="servicio().id" />
+          <a
+            routerLink="/agendar"
+            [queryParams]="{ servicio: servicio().id }"
+            class="inline-flex items-center gap-2 rounded-full bg-wine px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-wine-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wine"
+          >
+            Agendar
+            <i class="pi pi-arrow-right text-[11px]" aria-hidden="true"></i>
+          </a>
+        </div>
       </div>
     </article>
   `

@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from "@angular/common";
 import { ChangeDetectionStrategy, Component, computed, input } from "@angular/core";
 import { RouterLink } from "@angular/router";
+import { BotonDeseo } from "../../deseos/components/boton-deseo";
 import { Servicio } from "../models/catalogo.models";
 
 // Ícono del marcador de posición cuando el servicio aún no tiene foto (según la categoría)
@@ -16,7 +17,7 @@ const ICONO_POR_DEFECTO = "pi-star";
 // "Agendar" y "Ver todos los cortes" quedan por encima (relative z-10) como acciones propias.
 @Component({
   selector: "app-servicio-card",
-  imports: [NgOptimizedImage, RouterLink],
+  imports: [NgOptimizedImage, RouterLink, BotonDeseo],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <article class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-wine/10 has-[h3_a:focus-visible]:ring-2 has-[h3_a:focus-visible]:ring-wine">
@@ -40,6 +41,7 @@ const ICONO_POR_DEFECTO = "pi-star";
         @if (servicio().aDomicilio) {
           <span class="pointer-events-none absolute top-3 left-3 rounded-full bg-sage px-2.5 py-0.5 text-[11px] font-medium text-white shadow">A domicilio</span>
         }
+        <app-boton-deseo class="absolute top-3 right-3 z-10" tipo="servicio" [slug]="servicio().id" />
       </div>
       <div class="flex flex-1 flex-col p-5">
         <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-wine">{{ etiqueta() }}</p>

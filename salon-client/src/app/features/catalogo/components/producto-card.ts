@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from "@angular/common";
 import { ChangeDetectionStrategy, Component, computed, input } from "@angular/core";
 import { RouterLink } from "@angular/router";
+import { BotonDeseo } from "../../deseos/components/boton-deseo";
 import { Producto } from "../models/catalogo.models";
 
 // Puntos del medidor de fijación (de 3) según el nivel normalizado
@@ -9,7 +10,7 @@ const PUNTOS_POR_NIVEL = { media: 1, fuerte: 2, "muy-fuerte": 3 } as const;
 // Toda la tarjeta es un enlace a la ficha del producto: el enlace del nombre se extiende sobre la tarjeta (after:absolute).
 @Component({
   selector: "app-producto-card",
-  imports: [NgOptimizedImage, RouterLink],
+  imports: [NgOptimizedImage, RouterLink, BotonDeseo],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <article class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-wine/10 has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-wine">
@@ -23,6 +24,7 @@ const PUNTOS_POR_NIVEL = { media: 1, fuerte: 2, "muy-fuerte": 3 } as const;
           [style.object-position]="producto().posicionImagen"
           class="object-cover transition duration-700 group-hover:scale-105"
         />
+        <app-boton-deseo class="absolute top-3 right-3 z-10" tipo="producto" [slug]="producto().id" />
       </div>
       <div class="flex flex-1 flex-col p-5">
         <p class="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-wine">{{ producto().marca }}</p>

@@ -54,6 +54,7 @@ export class PanelLayout {
         ]
       : [
           { ruta: "/mi-cuenta", texto: "Mis citas" },
+          { ruta: "/mi-cuenta/deseos", texto: "Lista de deseos" },
           { ruta: "/agendar", texto: "Agendar cita" }
         ];
   }

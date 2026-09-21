@@ -64,6 +64,11 @@ export const routes: Routes = [
         path: "perfil",
         title: "Mi perfil — Salón de Belleza Familiar",
         loadComponent: () => import("./features/perfil/pages/perfil-page").then(m => m.PerfilPage)
+      },
+      {
+        path: "deseos",
+        title: "Mi lista de deseos — Salón de Belleza Familiar",
+        loadComponent: () => import("./features/deseos/pages/deseos-page").then(m => m.DeseosPage)
       }
     ]
   },
