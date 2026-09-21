@@ -32,6 +32,10 @@ public class Usuario {
     @Column(length = 20)
     private String telefono;
 
+    // Ruta relativa tipo "uploads/perfiles/uuid.jpg". La imagen vive en disco, no en la base.
+    @Column(name = "foto_url", length = 500)
+    private String fotoUrl;
+
     @Column(name = "password_hash", nullable = false, length = 100)
     private String passwordHash;
 

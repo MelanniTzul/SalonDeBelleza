@@ -12,6 +12,10 @@ public record UsuarioResponse(
         String apellido,
         String email,
         String telefono,
+
+        @Schema(description = "Ruta relativa de la foto, ej. uploads/perfiles/uuid.jpg. Null si no tiene.")
+        String fotoUrl,
+
         String rol,
         boolean activo,
 
@@ -31,6 +35,7 @@ public record UsuarioResponse(
                 usuario.getApellido(),
                 usuario.getEmail(),
                 usuario.getTelefono(),
+                usuario.getFotoUrl(),
                 usuario.getRol().name(),
                 usuario.isActivo(),
                 especialidad,
