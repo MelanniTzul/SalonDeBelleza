@@ -3,15 +3,18 @@
 @plugin "tailwindcss-primeui";
 
 @theme {
-  --color-ink: #241726;
-  --color-wine: #6E2142;
-  --color-wine-dark: #4C1730;
-  --color-gold: #C9A66B;
-  --color-sage: #3F6B4F;
-  --color-ivory: #FAF6F2;
-  --color-blush: #F1E3E7;
-  --color-line: #E4D9DC;
-  --color-muted: #7A6E72;
+  /* Paleta en blanco y negro. Los nombres (wine, gold, sage, blush, ivory) se conservan por compatibilidad:
+     wine = negro principal, wine-dark = negro suave, gold = gris de acento, sage = gris oscuro,
+     blush = gris muy claro, ivory = blanco roto. */
+  --color-ink: #111111;
+  --color-wine: #000000;
+  --color-wine-dark: #222222;
+  --color-gold: #A3A3A3;
+  --color-sage: #3A3A3A;
+  --color-ivory: #F7F7F7;
+  --color-blush: #EDEDED;
+  --color-line: #DEDEDE;
+  --color-muted: #666666;
   --font-serif: "Fraunces", serif;
   --font-sans: "Inter", sans-serif;
 }

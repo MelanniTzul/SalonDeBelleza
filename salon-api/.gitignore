@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Imágenes subidas por el administrador (se guardan en disco, no en git) ###
+/uploads/
