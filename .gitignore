@@ -1,2 +1,12 @@
+# Variables de entorno: contienen contraseñas y claves. Solo se sube el ejemplo.
 .env
+.env.*
+!.env.example
+
 node_modules/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

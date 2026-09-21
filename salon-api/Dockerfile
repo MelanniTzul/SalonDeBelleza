@@ -11,8 +11,12 @@ RUN ./gradlew --no-daemon bootJar -x test \
 # ---------- Etapa 2: ejecutar ----------
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-RUN useradd --system --create-home appuser
+RUN useradd --system --create-home appuser \
+    && mkdir -p /app/uploads \
+    && chown appuser /app/uploads
 COPY --from=build /app/app.jar app.jar
 USER appuser
+# Imágenes subidas por el administrador (en Docker Compose es un volumen para que no se pierdan al reconstruir)
+ENV UPLOADS_DIR=/app/uploads
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
