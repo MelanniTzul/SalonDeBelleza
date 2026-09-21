@@ -7,7 +7,10 @@ export interface Usuario {
   readonly apellido: string;
   readonly email: string;
   readonly telefono: string | null;
+  // Ruta relativa tipo "uploads/perfiles/x.jpg"; se convierte con urlImagen()
+  readonly fotoUrl: string | null;
   readonly rol: Rol;
+  readonly especialidad: string | null;
 }
 
 export interface LoginRequest {

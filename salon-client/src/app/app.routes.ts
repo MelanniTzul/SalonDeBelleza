@@ -59,6 +59,11 @@ export const routes: Routes = [
         path: "",
         title: "Mis citas — Salón de Belleza Familiar",
         loadComponent: () => import("./features/reservas/pages/mis-citas-page").then(m => m.MisCitasPage)
+      },
+      {
+        path: "perfil",
+        title: "Mi perfil — Salón de Belleza Familiar",
+        loadComponent: () => import("./features/perfil/pages/perfil-page").then(m => m.PerfilPage)
       }
     ]
   },
@@ -73,6 +78,11 @@ export const routes: Routes = [
         path: "",
         title: "Mi agenda — Salón de Belleza Familiar",
         loadComponent: () => import("./features/agenda/pages/agenda-estilista-page").then(m => m.AgendaEstilistaPage)
+      },
+      {
+        path: "perfil",
+        title: "Mi perfil — Salón de Belleza Familiar",
+        loadComponent: () => import("./features/perfil/pages/perfil-page").then(m => m.PerfilPage)
       }
     ]
   },
@@ -93,6 +103,11 @@ export const routes: Routes = [
         path: "usuarios",
         title: "Usuarios — Salón de Belleza Familiar",
         loadComponent: () => import("./features/usuarios/pages/usuarios-page").then(m => m.UsuariosPage)
+      },
+      {
+        path: "perfil",
+        title: "Mi perfil — Salón de Belleza Familiar",
+        loadComponent: () => import("./features/perfil/pages/perfil-page").then(m => m.PerfilPage)
       }
     ]
   },

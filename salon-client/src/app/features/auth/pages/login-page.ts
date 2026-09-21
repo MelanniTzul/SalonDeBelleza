@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { NgOptimizedImage } from "@angular/common";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 
 import { ApiError, RUTA_INICIO_POR_ROL } from "../../../core/models/auth.models";
@@ -7,7 +8,7 @@ import { AuthService } from "../../../core/services/auth.service";
 
 @Component({
   selector: "app-login-page",
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, NgOptimizedImage],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <main class="grid min-h-screen grid-cols-1 lg:grid-cols-[1fr_0.85fr]">
@@ -115,9 +116,11 @@ import { AuthService } from "../../../core/services/auth.service";
       </div>
 
       <!-- Columna decorativa, misma textura del inicio -->
-      <aside class="relative hidden bg-linear-to-br from-blush to-[#E3C9CF] lg:block" aria-hidden="true">
-        <div class="absolute inset-8 rounded border border-wine/25"></div>
-        <blockquote class="absolute bottom-16 left-12 right-12 font-serif text-[26px] font-semibold leading-[1.25] text-wine-dark">
+      <aside class="relative hidden overflow-hidden bg-blush lg:block" aria-hidden="true">
+        <img ngSrc="img/salon-113.jpeg" fill priority sizes="45vw" alt="" class="object-cover object-[center_62%]" />
+        <div class="absolute inset-0 bg-linear-to-t from-ink/70 via-ink/20 to-transparent"></div>
+        <div class="absolute inset-8 rounded border border-white/40"></div>
+        <blockquote class="absolute bottom-16 left-12 right-12 font-serif text-[26px] font-semibold leading-[1.25] text-white drop-shadow-[0_2px_8px_rgba(36,23,38,0.6)]">
           Tu cita, sin llamadas ni esperas.
         </blockquote>
       </aside>

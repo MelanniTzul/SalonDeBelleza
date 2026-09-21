@@ -1,5 +1,6 @@
 package com.salondebellezafamiliar.salonapi.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,10 @@ import java.util.UUID;
 // Guarda las imágenes que sube el administrador. El formato se detecta por el contenido del archivo
 // (no por el nombre ni el Content-Type que envía el cliente) y el nombre final lo genera el servidor.
 @Service
+@Slf4j
 public class ImagenService {
 
-    private static final Set<String> CARPETAS = Set.of("servicios", "productos", "cortes");
+    private static final Set<String> CARPETAS = Set.of("servicios", "productos", "cortes", "perfiles");
     private static final long TAMANO_MAXIMO = 5L * 1024 * 1024;
 
     private final Path raiz;
@@ -32,7 +34,7 @@ public class ImagenService {
     /** Devuelve la ruta relativa que se guarda en la base, ej. "uploads/productos/3f2a....jpg". */
     public String guardar(MultipartFile archivo, String carpeta) {
         if (!CARPETAS.contains(carpeta)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Carpeta no válida. Usa: servicios, productos o cortes");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Carpeta no válida. Usa: servicios, productos, cortes o perfiles");
         }
         if (archivo == null || archivo.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se recibió ninguna imagen");
@@ -54,6 +56,23 @@ public class ImagenService {
             return "uploads/" + carpeta + "/" + nombre;
         } catch (IOException e) {
             throw new UncheckedIOException("No se pudo guardar la imagen", e);
+        }
+    }
+
+    // Borra un archivo subido a partir de la ruta que se guardo en la base ("uploads/carpeta/nombre").
+    // Si no existe o no esta dentro de la carpeta de uploads, no hace nada.
+    public void eliminar(String rutaRelativa) {
+        if (rutaRelativa == null || !rutaRelativa.startsWith("uploads/")) {
+            return;
+        }
+        Path archivo = raiz.resolve(rutaRelativa.substring("uploads/".length())).normalize();
+        if (!archivo.startsWith(raiz)) {
+            return;
+        }
+        try {
+            Files.deleteIfExists(archivo);
+        } catch (IOException e) {
+            log.warn("No se pudo borrar la imagen {}: {}", rutaRelativa, e.getMessage());
         }
     }
 
