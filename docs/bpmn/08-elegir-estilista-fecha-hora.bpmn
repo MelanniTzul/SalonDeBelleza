@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_P08" targetNamespace="http://bpmn.io/schema/bpmn" exporter="salon-de-belleza-familiar-docgen" exporterVersion="1.0">
+  <bpmn:process id="P08" name="Elegir estilista, fecha y hora" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_P08">
+      <bpmn:lane id="Lane_1" name="Cliente">
+        <bpmn:flowNodeRef>Start_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_6</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_2" name="Sistema">
+        <bpmn:flowNodeRef>Task_3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_1" name="Necesita elegir
+un horario">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_2" name="Elige una estilista que
+ofrezca esos servicios">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_3" name="Calcula la disponibilidad según
+el horario y las citas existentes">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_4" name="¿Hay una hora
+disponible?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_5" name="Ofrece otra fecha
+u otra estilista">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_6" name="Horario
+elegido">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_1" targetRef="Task_2" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_2" targetRef="Task_3" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_3" targetRef="Gateway_4" />
+    <bpmn:sequenceFlow id="Flow_4" name="No" sourceRef="Gateway_4" targetRef="Task_5" />
+    <bpmn:sequenceFlow id="Flow_5" name="Reintentar" sourceRef="Task_5" targetRef="Task_2" />
+    <bpmn:sequenceFlow id="Flow_6" name="Sí" sourceRef="Gateway_4" targetRef="End_6" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_P08">
+    <bpmndi:BPMNPlane id="BPMNPlane_P08" bpmnElement="P08">
+      <bpmndi:BPMNShape id="P08_pool_di" bpmnElement="P08" isHorizontal="true">
+        <dc:Bounds x="20" y="40" width="1480" height="560" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true">
+        <dc:Bounds x="20" y="60" width="1480" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true">
+        <dc:Bounds x="20" y="320" width="1480" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_1_di" bpmnElement="Start_1">
+        <dc:Bounds x="142" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="112" y="211" width="96" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
+        <dc:Bounds x="295" y="150" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_3_di" bpmnElement="Task_3">
+        <dc:Bounds x="495" y="410" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_4_di" bpmnElement="Gateway_4">
+        <dc:Bounds x="735" y="425" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="705" y="478" width="110" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_5_di" bpmnElement="Task_5">
+        <dc:Bounds x="1095" y="340" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_6_di" bpmnElement="End_6">
+        <dc:Bounds x="942" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="912" y="281" width="96" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="178" y="190" />
+        <di:waypoint x="295" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="425" y="190" />
+        <di:waypoint x="460" y="190" />
+        <di:waypoint x="460" y="450" />
+        <di:waypoint x="495" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="625" y="450" />
+        <di:waypoint x="735" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="785" y="450" />
+        <di:waypoint x="940" y="450" />
+        <di:waypoint x="940" y="380" />
+        <di:waypoint x="1095" y="380" />
+        <bpmndi:BPMNLabel><dc:Bounds x="888" y="409" width="80" height="20" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="1160" y="340" />
+        <di:waypoint x="1160" y="290" />
+        <di:waypoint x="360" y="290" />
+        <di:waypoint x="360" y="150" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1120" y="324" width="80" height="20" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="760" y="425" />
+        <di:waypoint x="860" y="425" />
+        <di:waypoint x="860" y="278" />
+        <di:waypoint x="960" y="278" />
+        <bpmndi:BPMNLabel><dc:Bounds x="820" y="415" width="80" height="20" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
