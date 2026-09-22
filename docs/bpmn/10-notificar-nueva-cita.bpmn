@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_P10" targetNamespace="http://bpmn.io/schema/bpmn" exporter="salon-de-belleza-familiar-docgen" exporterVersion="1.0">
+  <bpmn:process id="P10" name="Notificar la nueva cita" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_P10">
+      <bpmn:lane id="Lane_1" name="Sistema">
+        <bpmn:flowNodeRef>Start_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_2" name="Estilista">
+        <bpmn:flowNodeRef>Task_4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_1" name="La cita quedó
+CONFIRMADA">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_2" name="Envía el correo de
+confirmación al cliente">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_3" name="Notifica a
+la estilista">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_4" name="Ve la nueva cita
+en su agenda">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_5" name="Estilista
+informada">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_1" targetRef="Task_2" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_2" targetRef="Task_3" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_3" targetRef="Task_4" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_4" targetRef="End_5" />
+    <bpmn:textAnnotation id="Annotation_6">
+      <bpmn:text>Un fallo de correo no impide que
+la cita se haya creado.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Annotation_6_assoc" sourceRef="Task_2" targetRef="Annotation_6" associationDirection="None" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_P10">
+    <bpmndi:BPMNPlane id="BPMNPlane_P10" bpmnElement="P10">
+      <bpmndi:BPMNShape id="P10_pool_di" bpmnElement="P10" isHorizontal="true">
+        <dc:Bounds x="20" y="40" width="1280" height="560" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true">
+        <dc:Bounds x="20" y="60" width="1280" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true">
+        <dc:Bounds x="20" y="320" width="1280" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_1_di" bpmnElement="Start_1">
+        <dc:Bounds x="142" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="112" y="211" width="96" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
+        <dc:Bounds x="295" y="150" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_3_di" bpmnElement="Task_3">
+        <dc:Bounds x="495" y="150" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_4_di" bpmnElement="Task_4">
+        <dc:Bounds x="695" y="410" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_5_di" bpmnElement="End_5">
+        <dc:Bounds x="942" y="432" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="912" y="471" width="96" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="178" y="190" />
+        <di:waypoint x="295" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="425" y="190" />
+        <di:waypoint x="495" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="625" y="190" />
+        <di:waypoint x="660" y="190" />
+        <di:waypoint x="660" y="450" />
+        <di:waypoint x="695" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="825" y="450" />
+        <di:waypoint x="942" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Annotation_6_di" bpmnElement="Annotation_6">
+        <dc:Bounds x="360" y="80" width="230" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Annotation_6_assoc_di" bpmnElement="Annotation_6_assoc">
+        <di:waypoint x="360" y="150" />
+        <di:waypoint x="475" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

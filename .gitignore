@@ -8,13 +8,9 @@ node_modules/
 # Archivos de trabajo
 mockups.html
 .claude
-<<<<<<< Updated upstream
 
 # Sistema y editores
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
-=======
-docs/
->>>>>>> Stashed changes

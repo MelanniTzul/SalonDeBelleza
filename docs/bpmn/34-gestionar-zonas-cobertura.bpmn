@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_P34" targetNamespace="http://bpmn.io/schema/bpmn" exporter="salon-de-belleza-familiar-docgen" exporterVersion="1.0">
+  <bpmn:process id="P34" name="Gestionar las zonas de cobertura a domicilio" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_P34">
+      <bpmn:lane id="Lane_1" name="Administrador">
+        <bpmn:flowNodeRef>Start_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_6</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_2" name="Sistema">
+        <bpmn:flowNodeRef>Task_5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_1" name="Necesita ajustar
+el servicio a domicilio">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_2" name="¿Qué
+necesita hacer?">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_3" name="Crea una zona con
+su nombre y recargo">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_4" name="Edita el nombre o
+el recargo de una zona">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_5" name="Guarda los
+cambios">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_6" name="Zona
+actualizada">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_1" targetRef="Gateway_2" />
+    <bpmn:sequenceFlow id="Flow_2" name="Crear" sourceRef="Gateway_2" targetRef="Task_3" />
+    <bpmn:sequenceFlow id="Flow_3" name="Editar o desactivar" sourceRef="Gateway_2" targetRef="Task_4" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_3" targetRef="Task_5" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_4" targetRef="Task_5" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_5" targetRef="End_6" />
+    <bpmn:textAnnotation id="Annotation_7">
+      <bpmn:text>Solo las zonas activas se ofrecen
+al cliente al agendar a domicilio.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Annotation_7_assoc" sourceRef="Task_5" targetRef="Annotation_7" associationDirection="None" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_P34">
+    <bpmndi:BPMNPlane id="BPMNPlane_P34" bpmnElement="P34">
+      <bpmndi:BPMNShape id="P34_pool_di" bpmnElement="P34" isHorizontal="true">
+        <dc:Bounds x="20" y="40" width="1280" height="560" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true">
+        <dc:Bounds x="20" y="60" width="1280" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true">
+        <dc:Bounds x="20" y="320" width="1280" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_1_di" bpmnElement="Start_1">
+        <dc:Bounds x="142" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="112" y="211" width="96" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_2_di" bpmnElement="Gateway_2">
+        <dc:Bounds x="335" y="165" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="305" y="218" width="110" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_3_di" bpmnElement="Task_3">
+        <dc:Bounds x="495" y="80" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_4_di" bpmnElement="Task_4">
+        <dc:Bounds x="495" y="220" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_5_di" bpmnElement="Task_5">
+        <dc:Bounds x="695" y="410" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_6_di" bpmnElement="End_6">
+        <dc:Bounds x="942" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="912" y="211" width="96" height="28" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="178" y="190" />
+        <di:waypoint x="335" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="385" y="190" />
+        <di:waypoint x="440" y="190" />
+        <di:waypoint x="440" y="120" />
+        <di:waypoint x="495" y="120" />
+        <bpmndi:BPMNLabel><dc:Bounds x="388" y="104" width="80" height="20" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="385" y="190" />
+        <di:waypoint x="440" y="190" />
+        <di:waypoint x="440" y="260" />
+        <di:waypoint x="495" y="260" />
+        <bpmndi:BPMNLabel><dc:Bounds x="388" y="290" width="80" height="20" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="625" y="120" />
+        <di:waypoint x="692" y="120" />
+        <di:waypoint x="692" y="410" />
+        <di:waypoint x="760" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="625" y="260" />
+        <di:waypoint x="692" y="260" />
+        <di:waypoint x="692" y="490" />
+        <di:waypoint x="760" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="825" y="450" />
+        <di:waypoint x="884" y="450" />
+        <di:waypoint x="884" y="190" />
+        <di:waypoint x="942" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Annotation_7_di" bpmnElement="Annotation_7">
+        <dc:Bounds x="760" y="340" width="250" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Annotation_7_assoc_di" bpmnElement="Annotation_7_assoc">
+        <di:waypoint x="760" y="410" />
+        <di:waypoint x="885" y="400" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
