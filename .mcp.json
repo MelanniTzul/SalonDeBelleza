@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "mysql": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "set -a; . ./.env; set +a; MYSQL_HOST=\"$DB_HOST\" MYSQL_PORT=\"$DB_PORT\" MYSQL_USER=\"$DB_USER\" MYSQL_PASS=\"$DB_PASSWORD\" MYSQL_DB=\"$DB_NAME\" exec npx -y @benborla29/mcp-server-mysql"
+      ]
+    }
+  }
+}
