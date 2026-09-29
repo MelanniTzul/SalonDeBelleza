@@ -10,6 +10,21 @@
         "-lc",
         "set -a; . ./.env; set +a; MYSQL_HOST=\"$DB_HOST\" MYSQL_PORT=\"$DB_PORT\" MYSQL_USER=\"$DB_USER\" MYSQL_PASS=\"$DB_PASSWORD\" MYSQL_DB=\"$DB_NAME\" exec npx -y @benborla29/mcp-server-mysql"
       ]
+    },
+    "figma": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "set -a; . ./.env; set +a; exec npx -y figma-developer-mcp --figma-api-key=\"$FIGMA_API_KEY\" --stdio"
+      ]
+    },
+    "backend-api": {
+      "command": "npx",
+      "args": ["-y", "@ivotoby/openapi-mcp-server"],
+      "env": {
+        "API_BASE_URL": "http://localhost:8080",
+        "OPENAPI_SPEC_PATH": "http://localhost:8080/v3/api-docs"
+      }
     }
   }
 }
