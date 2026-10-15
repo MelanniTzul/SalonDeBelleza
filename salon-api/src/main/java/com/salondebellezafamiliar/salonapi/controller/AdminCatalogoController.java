@@ -1,6 +1,7 @@
 package com.salondebellezafamiliar.salonapi.controller;
 
 import com.salondebellezafamiliar.salonapi.dto.*;
+import com.salondebellezafamiliar.salonapi.entity.TipoCategoria;
 import com.salondebellezafamiliar.salonapi.service.CatalogoAdminService;
 import com.salondebellezafamiliar.salonapi.service.CatalogoService;
 import com.salondebellezafamiliar.salonapi.service.ImagenService;
@@ -22,6 +23,30 @@ public class AdminCatalogoController {
     private final CatalogoService catalogoService;
     private final CatalogoAdminService adminService;
     private final ImagenService imagenService;
+
+    // ---------- Categorías ----------
+
+    @GetMapping("/categorias")
+    public List<CategoriaAdminDto> categorias(@RequestParam(required = false) TipoCategoria tipo) {
+        return adminService.categorias(tipo);
+    }
+
+    @PostMapping("/categorias")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CategoriaAdminDto crearCategoria(@Valid @RequestBody CategoriaRequest request) {
+        return adminService.crearCategoria(request);
+    }
+
+    @PutMapping("/categorias/{id}")
+    public CategoriaAdminDto actualizarCategoria(@PathVariable Long id, @Valid @RequestBody CategoriaRequest request) {
+        return adminService.actualizarCategoria(id, request);
+    }
+
+    @DeleteMapping("/categorias/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void desactivarCategoria(@PathVariable Long id) {
+        adminService.desactivarCategoria(id);
+    }
 
     // ---------- Servicios ----------
 

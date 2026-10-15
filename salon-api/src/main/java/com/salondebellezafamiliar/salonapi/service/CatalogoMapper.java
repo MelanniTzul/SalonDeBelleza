@@ -15,6 +15,10 @@ final class CatalogoMapper {
         return new CategoriaDto(c.getSlug(), c.getNombre());
     }
 
+    static CategoriaAdminDto aDtoAdmin(Categoria c) {
+        return new CategoriaAdminDto(c.getId(), c.getSlug(), c.getNombre(), c.getTipo(), c.getOrden(), c.isActivo());
+    }
+
     static ServicioDto aDto(Servicio s) {
         return new ServicioDto(
                 s.getId(), s.getSlug(), s.getNombre(), s.getDescripcion(),

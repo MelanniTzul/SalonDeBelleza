@@ -26,4 +26,7 @@ public class Categoria {
 
     @Column(nullable = false)
     private int orden;
+
+    @Column(nullable = false)
+    private boolean activo = true;
 }

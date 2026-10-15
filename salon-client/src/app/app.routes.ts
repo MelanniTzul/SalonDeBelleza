@@ -105,6 +105,16 @@ export const routes: Routes = [
           import("./features/reportes/pages/admin-dashboard-page").then(m => m.AdminDashboardPage)
       },
       {
+        path: "servicios",
+        title: "Servicios — Salón de Belleza Familiar",
+        loadComponent: () => import("./features/admin-catalogo/pages/admin-servicios-page").then(m => m.AdminServiciosPage)
+      },
+      {
+        path: "productos",
+        title: "Productos — Salón de Belleza Familiar",
+        loadComponent: () => import("./features/admin-catalogo/pages/admin-productos-page").then(m => m.AdminProductosPage)
+      },
+      {
         path: "usuarios",
         title: "Usuarios — Salón de Belleza Familiar",
         loadComponent: () => import("./features/usuarios/pages/usuarios-page").then(m => m.UsuariosPage)

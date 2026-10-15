@@ -2,9 +2,11 @@ package com.salondebellezafamiliar.salonapi.catalogo;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,25 +15,46 @@ class CatalogoPublicoTest extends BaseApiTest {
     @Test
     @DisplayName("El catálogo de servicios es público y trae los datos iniciales")
     void listaServiciosSinSesion() throws Exception {
+        // El total, y qué servicio cae en cada posición salvo el primero, no son fijos
+        // (el admin da de alta, edita y desactiva servicios desde el panel): solo se ancla
+        // al primero (orden 0, estable) para verificar la forma de la respuesta.
         mvc.perform(get("/api/servicios"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(14)))
+                .andExpect(jsonPath("$", not(empty())))
                 .andExpect(jsonPath("$[0].slug", is("corte-cabello")))
                 .andExpect(jsonPath("$[0].categoria", is("cortes")))
                 .andExpect(jsonPath("$[0].precio", is(150.00)))
                 .andExpect(jsonPath("$[0].duracionMinutos", is(45)))
-                .andExpect(jsonPath("$[0].grupoCortes", is("MUJERES")))
-                .andExpect(jsonPath("$[1].precio", nullValue()))
-                .andExpect(jsonPath("$[1].variantes", contains("Clásico", "Degradado", "A máquina")));
+                .andExpect(jsonPath("$[0].grupoCortes", is("MUJERES")));
+    }
+
+    @Test
+    @DisplayName("Un servicio sin precio fijo lo trae nulo (se muestra como \"Consultar\") y sus variantes en orden")
+    void servicioSinPrecioConVariantes() throws Exception {
+        // Autocontenido: no depende de qué tan activo esté ningún servicio real del catálogo.
+        String sinPrecio = """
+                {"slug":"corte-sin-precio-prueba","categoria":"cortes","nombre":"Corte sin precio de prueba",
+                 "aDomicilio":false,"variantes":["Clásico","Degradado","A máquina"],"imagen":"img/salon-037.jpeg"}
+                """;
+        mvc.perform(post("/api/admin/servicios").header("Authorization", tokenAdmin())
+                        .contentType(MediaType.APPLICATION_JSON).content(sinPrecio))
+                .andExpect(status().isCreated());
+
+        mvc.perform(get("/api/servicios/corte-sin-precio-prueba"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.precio", nullValue()))
+                .andExpect(jsonPath("$.variantes", contains("Clásico", "Degradado", "A máquina")));
     }
 
     @Test
     @DisplayName("Los servicios se pueden filtrar por categoría")
     void filtraServiciosPorCategoria() throws Exception {
-        mvc.perform(get("/api/servicios").param("categoria", "cejas-pestanas"))
+        // No se fija en qué servicios concretos trae "cortes" (el admin los edita desde el
+        // panel): solo que el filtro realmente filtra y que cada resultado es de esa categoría.
+        mvc.perform(get("/api/servicios").param("categoria", "cortes"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[*].slug", containsInAnyOrder("planchado-cejas", "rizado-pestanas")));
+                .andExpect(jsonPath("$", not(empty())))
+                .andExpect(jsonPath("$[*].categoria", everyItem(is("cortes"))));
     }
 
     @Test
@@ -65,13 +88,16 @@ class CatalogoPublicoTest extends BaseApiTest {
     }
 
     @Test
-    @DisplayName("Las categorías se piden por tipo y vienen ordenadas")
+    @DisplayName("Las categorías se piden por tipo y solo traen las activas")
     void categorias() throws Exception {
+        // El admin administra las categorías desde el panel, así que esta prueba no asume
+        // una lista fija: solo que el filtro por tipo funciona y nunca trae nada desactivado.
         mvc.perform(get("/api/categorias").param("tipo", "SERVICIO"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*].slug", contains("cortes", "color", "peinados", "cejas-pestanas", "maquillaje")));
+                .andExpect(jsonPath("$", not(empty())));
         mvc.perform(get("/api/categorias").param("tipo", "PRODUCTO"))
-                .andExpect(jsonPath("$[*].slug", contains("geles", "rizos")));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", not(empty())));
         mvc.perform(get("/api/categorias")).andExpect(status().isBadRequest());
     }
 

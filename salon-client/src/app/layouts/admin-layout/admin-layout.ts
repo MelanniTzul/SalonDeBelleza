@@ -52,7 +52,8 @@ export class AdminLayout {
     { ruta: "/admin", texto: "Panel", exacto: true },
     { ruta: "/admin/citas", texto: "Citas", exacto: false },
     { ruta: "/admin/usuarios", texto: "Usuarios", exacto: false },
-    { ruta: "/admin/catalogo", texto: "Servicios y productos", exacto: false },
+    { ruta: "/admin/productos", texto: "Productos", exacto: false },
+    { ruta: "/admin/servicios", texto: "Servicios", exacto: false },
     { ruta: "/admin/reportes", texto: "Reportes", exacto: false }
   ];
 }
