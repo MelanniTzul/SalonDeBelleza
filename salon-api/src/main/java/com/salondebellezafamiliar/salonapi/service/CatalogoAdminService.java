@@ -24,6 +24,45 @@ public class CatalogoAdminService {
     private final EstiloCorteRepository estiloCorteRepository;
     private final CorteRepository corteRepository;
 
+    // ---------- Categorías ----------
+
+    public List<CategoriaAdminDto> categorias(TipoCategoria tipo) {
+        List<Categoria> categorias = tipo != null
+                ? categoriaRepository.findByTipoOrderByOrdenAscIdAsc(tipo)
+                : categoriaRepository.findAllByOrderByTipoAscOrdenAscIdAsc();
+        return categorias.stream().map(CatalogoMapper::aDtoAdmin).toList();
+    }
+
+    public CategoriaAdminDto crearCategoria(CategoriaRequest r) {
+        if (categoriaRepository.existsByTipoAndNombre(r.tipo(), r.nombre().trim())) throw nombreEnUso(r.nombre());
+        if (categoriaRepository.existsByTipoAndSlug(r.tipo(), r.slug())) throw slugEnUso(r.slug());
+        Categoria c = new Categoria();
+        aplicar(c, r);
+        return CatalogoMapper.aDtoAdmin(categoriaRepository.save(c));
+    }
+
+    public CategoriaAdminDto actualizarCategoria(Long id, CategoriaRequest r) {
+        Categoria c = categoriaRepository.findById(id).orElseThrow(() -> noEncontrado("Categoría"));
+        boolean cambioNombre = !c.getNombre().equalsIgnoreCase(r.nombre().trim());
+        if (cambioNombre && categoriaRepository.existsByTipoAndNombre(r.tipo(), r.nombre().trim())) throw nombreEnUso(r.nombre());
+        boolean cambioSlugOTipo = !c.getSlug().equals(r.slug()) || c.getTipo() != r.tipo();
+        if (cambioSlugOTipo && categoriaRepository.existsByTipoAndSlug(r.tipo(), r.slug())) throw slugEnUso(r.slug());
+        aplicar(c, r);
+        return CatalogoMapper.aDtoAdmin(c);
+    }
+
+    public void desactivarCategoria(Long id) {
+        categoriaRepository.findById(id).orElseThrow(() -> noEncontrado("Categoría")).setActivo(false);
+    }
+
+    private void aplicar(Categoria c, CategoriaRequest r) {
+        c.setSlug(r.slug());
+        c.setNombre(r.nombre().trim());
+        c.setTipo(r.tipo());
+        c.setOrden(r.orden() != null ? r.orden() : c.getOrden());
+        c.setActivo(r.activo() == null || r.activo());
+    }
+
     // ---------- Servicios ----------
 
     public ServicioDto crearServicio(ServicioRequest r) {
@@ -155,5 +194,9 @@ public class CatalogoAdminService {
 
     private static ResponseStatusException slugEnUso(String slug) {
         return new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe un registro con el identificador '" + slug + "'");
+    }
+
+    private static ResponseStatusException nombreEnUso(String nombre) {
+        return new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una categoría llamada '" + nombre.trim() + "'");
     }
 }

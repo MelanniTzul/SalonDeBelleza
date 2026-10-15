@@ -28,7 +28,7 @@ public class CatalogoService {
     private final CorteRepository corteRepository;
 
     public List<CategoriaDto> categorias(TipoCategoria tipo) {
-        return categoriaRepository.findByTipoOrderByOrdenAscIdAsc(tipo).stream().map(CatalogoMapper::aDto).toList();
+        return categoriaRepository.findByTipoAndActivoTrueOrderByOrdenAscIdAsc(tipo).stream().map(CatalogoMapper::aDto).toList();
     }
 
     public List<ServicioDto> servicios(String categoria, boolean incluirInactivos) {

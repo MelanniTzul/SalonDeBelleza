@@ -1,5 +1,6 @@
 package com.salondebellezafamiliar.salonapi.catalogo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -50,6 +51,10 @@ class CatalogoAdminTest extends BaseApiTest {
     @DisplayName("El administrador crea un servicio y aparece en el catálogo público")
     void creaServicio() throws Exception {
         String token = tokenAdmin();
+        // El total de partida no es fijo (el admin da de alta y de baja servicios desde el
+        // panel): se mide antes y se compara en relativo, no contra un número fijo.
+        int antes = contar("/api/servicios");
+
         enviar(post("/api/admin/servicios"), token, SERVICIO)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", notNullValue()))
@@ -60,7 +65,7 @@ class CatalogoAdminTest extends BaseApiTest {
         mvc.perform(get("/api/servicios/alisado-keratina"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.precio", is(350.00)));
-        mvc.perform(get("/api/servicios")).andExpect(jsonPath("$", hasSize(15)));
+        mvc.perform(get("/api/servicios")).andExpect(jsonPath("$", hasSize(antes + 1)));
 
         // Mismo identificador otra vez: conflicto
         enviar(post("/api/admin/servicios"), token, SERVICIO).andExpect(status().isConflict());
@@ -101,6 +106,8 @@ class CatalogoAdminTest extends BaseApiTest {
     @DisplayName("Editar y desactivar: el servicio sale del sitio pero se conserva y se puede reactivar")
     void editaDesactivaYReactiva() throws Exception {
         String token = tokenAdmin();
+        int antesPublico = contar("/api/servicios");
+        int antesAdmin = contarConSesion("/api/admin/servicios", token);
         String id = extraerId(enviar(post("/api/admin/servicios"), token, SERVICIO).andReturn().getResponse().getContentAsString());
 
         enviar(put("/api/admin/servicios/" + id), token, SERVICIO.replace("350.00", "400.00"))
@@ -109,9 +116,9 @@ class CatalogoAdminTest extends BaseApiTest {
 
         mvc.perform(delete("/api/admin/servicios/" + id).header("Authorization", token)).andExpect(status().isNoContent());
         mvc.perform(get("/api/servicios/alisado-keratina")).andExpect(status().isNotFound());
-        mvc.perform(get("/api/servicios")).andExpect(jsonPath("$", hasSize(14)));
+        mvc.perform(get("/api/servicios")).andExpect(jsonPath("$", hasSize(antesPublico)));
         mvc.perform(get("/api/admin/servicios").header("Authorization", token))
-                .andExpect(jsonPath("$", hasSize(15)))
+                .andExpect(jsonPath("$", hasSize(antesAdmin + 1)))
                 .andExpect(jsonPath("$[?(@.slug == 'alisado-keratina')].activo", contains(false)));
 
         enviar(put("/api/admin/servicios/" + id), token, SERVICIO.replace("\"aDomicilio\"", "\"activo\":true,\"aDomicilio\""))
@@ -160,6 +167,16 @@ class CatalogoAdminTest extends BaseApiTest {
         enviar(post("/api/admin/cortes"), tokenAdmin(), corte.replace("degradado-prueba", "abuelo-1").replace("HOMBRES", "ABUELOS").replace("\"estilo\":\"degradado\",", ""))
                 .andExpect(status().isCreated());
         mvc.perform(get("/api/cortes")).andExpect(jsonPath("$[3].cortes", hasSize(1)));
+    }
+
+    private int contar(String ruta) throws Exception {
+        String json = mvc.perform(get(ruta)).andReturn().getResponse().getContentAsString();
+        return new ObjectMapper().readTree(json).size();
+    }
+
+    private int contarConSesion(String ruta, String token) throws Exception {
+        String json = mvc.perform(get(ruta).header("Authorization", token)).andReturn().getResponse().getContentAsString();
+        return new ObjectMapper().readTree(json).size();
     }
 
     private static String extraerId(String json) {
