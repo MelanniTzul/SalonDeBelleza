@@ -72,6 +72,12 @@ export class CatalogoService {
     if (this.estadoCortes() === "error") this.cargarCortes();
   }
 
+  /** Fuerza una recarga (lo usa el panel de administración tras crear, editar o desactivar algo del catálogo). */
+  refrescar(): void {
+    this.estado.set("inactivo");
+    this.cargar();
+  }
+
   servicioPorId(id: string): Servicio | undefined {
     return this._servicios().find(s => s.id === id);
   }

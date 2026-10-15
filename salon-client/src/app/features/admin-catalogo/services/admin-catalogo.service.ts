@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Observable, catchError, throwError } from "rxjs";
+import { Observable, catchError, tap, throwError } from "rxjs";
 
 import { environment } from "../../../../environments/environment";
 import { ApiError } from "../../../core/models/auth.models";
+import { CatalogoService } from "../../catalogo/services/catalogo.service";
 import {
   CategoriaAdmin,
   CategoriaRequest,
@@ -20,6 +21,7 @@ import {
 @Injectable({ providedIn: "root" })
 export class AdminCatalogoService {
   private readonly http = inject(HttpClient);
+  private readonly catalogo = inject(CatalogoService);
   private readonly base = `${environment.apiUrl}/admin`;
 
   // ---------- Categorías ----------
@@ -30,15 +32,17 @@ export class AdminCatalogoService {
   }
 
   crearCategoria(datos: CategoriaRequest): Observable<CategoriaAdmin> {
-    return this.http.post<CategoriaAdmin>(`${this.base}/categorias`, datos).pipe(catchError(this.traducir));
+    return this.http.post<CategoriaAdmin>(`${this.base}/categorias`, datos).pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   actualizarCategoria(id: number, datos: CategoriaRequest): Observable<CategoriaAdmin> {
-    return this.http.put<CategoriaAdmin>(`${this.base}/categorias/${id}`, datos).pipe(catchError(this.traducir));
+    return this.http
+      .put<CategoriaAdmin>(`${this.base}/categorias/${id}`, datos)
+      .pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   desactivarCategoria(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/categorias/${id}`).pipe(catchError(this.traducir));
+    return this.http.delete<void>(`${this.base}/categorias/${id}`).pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   // ---------- Servicios ----------
@@ -48,16 +52,18 @@ export class AdminCatalogoService {
   }
 
   crearServicio(datos: ServicioRequest): Observable<ServicioAdmin> {
-    return this.http.post<ServicioAdmin>(`${this.base}/servicios`, datos).pipe(catchError(this.traducir));
+    return this.http.post<ServicioAdmin>(`${this.base}/servicios`, datos).pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   actualizarServicio(id: number, datos: ServicioRequest): Observable<ServicioAdmin> {
-    return this.http.put<ServicioAdmin>(`${this.base}/servicios/${id}`, datos).pipe(catchError(this.traducir));
+    return this.http
+      .put<ServicioAdmin>(`${this.base}/servicios/${id}`, datos)
+      .pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   // El backend solo desactiva, nunca borra: las citas ya agendadas conservan su servicio.
   desactivarServicio(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/servicios/${id}`).pipe(catchError(this.traducir));
+    return this.http.delete<void>(`${this.base}/servicios/${id}`).pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   // ---------- Productos ----------
@@ -67,15 +73,17 @@ export class AdminCatalogoService {
   }
 
   crearProducto(datos: ProductoRequest): Observable<ProductoAdmin> {
-    return this.http.post<ProductoAdmin>(`${this.base}/productos`, datos).pipe(catchError(this.traducir));
+    return this.http.post<ProductoAdmin>(`${this.base}/productos`, datos).pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   actualizarProducto(id: number, datos: ProductoRequest): Observable<ProductoAdmin> {
-    return this.http.put<ProductoAdmin>(`${this.base}/productos/${id}`, datos).pipe(catchError(this.traducir));
+    return this.http
+      .put<ProductoAdmin>(`${this.base}/productos/${id}`, datos)
+      .pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   desactivarProducto(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/productos/${id}`).pipe(catchError(this.traducir));
+    return this.http.delete<void>(`${this.base}/productos/${id}`).pipe(tap(this.refrescarCatalogo), catchError(this.traducir));
   }
 
   // ---------- Imágenes ----------
@@ -87,6 +95,13 @@ export class AdminCatalogoService {
     cuerpo.append("carpeta", carpeta);
     return this.http.post<ImagenSubida>(`${this.base}/imagenes`, cuerpo).pipe(catchError(this.traducir));
   }
+
+  // Tras cualquier alta, edición o baja, el catálogo público (y los selects de categoría de
+  // los propios formularios de admin) quedaban con datos viejos hasta recargar la página.
+  // Esto los refresca de inmediato, dentro de la misma sesión.
+  private readonly refrescarCatalogo = (): void => {
+    this.catalogo.refrescar();
+  };
 
   private traducir(error: HttpErrorResponse): Observable<never> {
     if (error.status === 0) {
